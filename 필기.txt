@@ -210,6 +210,80 @@ $ git checkout HEAD~2  > 현재 기준 2단계 전 커밋
 - 해시 알고리즘 >  어떤 데이터를 입력하든 항상 고정된 문자열을 반환하는 알고리즘
 
 reset 명령어
-- 과거 시점의 특정 커밋으로 이동해서 >  그 커밋 이후의 커밋을 삭제한다.
-                                     
-$ git reset -- hard <커밋ID>
+- 과거 시점의 특정 커밋으로 이동해서 > 그 커밋 이후의 커밋을 삭제한다.
+
+$ git reset --hard <커밋 ID>
+
+$ git reset --hard 3734a27
+$ git reset --hard HEAD^
+$ git reset --hard HEAD~
+
+
+혹시 > reset 하기 전으로 돌아가기
+
+$ git reflog
+$ git reset --hard 7222480
+
+
+
+
+
+revert 명령어
+- reset과 비슷한 용도의 명령어
+- 과거 시점의 특정 커밋을 취소(삭제x)하는 역할
+- 협업에서 reset 대신 많이 사용
+
+$ git revert <취소하려는 커밋 ID>
+
+$ git revert 7222480
+
+$ git revert <과거 ID>..<미래 ID>
+$ git revert 3..5
+
+
+
+
+
+
+브랜치, branch
+- 여러가지 작업을 각각 분리시켜 진행하고 싶을 때
+- ex) 게시판 업무 > 브랜치 생성 > 게시판 구현 > 브랜치 병합
+
+
+브랜치 확인하기
+- 최소 1개 이상의 커밋이 존재해야 브랜치가 존재한다.
+
+$ git init
+
+$ git branch
+
+"index.html"
+
+$ git add .
+
+$ git commit -m "create index.html"
+
+$ git branch
+
+
+//게시판 구현
+$ git branch <브랜치명>
+
+$ git branch board
+
+$ git branch
+
+//브랜치 이동하기
+//1. checkout > 비권장
+//2. switch > 권장
+
+$ git checkout board
+$ git switch board
+
+"board.html"
+
+$ git add .
+$ git commit -m "create board.html"
+
+$ git switch main
+
