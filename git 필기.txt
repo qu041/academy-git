@@ -287,3 +287,107 @@ $ git commit -m "create board.html"
 
 $ git switch main
 
+//회원 가입 구현
+$ git checkout -b member
+$ git switch -c member >> 브랜치 만들고 이동까지 하기 -c >> 아마 create?
+
+특정 branch 삭제하기
+$ git branch -d <브랜치명>  >> 해당 브랜치 할 일(merge) 다 마치고 삭제
+$ git branch -D <브랜치명>  >> 해당 브랜치 강제 삭제
+
+
+브랜치 병합
+1. merge
+2. rebase
+
+merge 명령어
+- 서로 다른 두 브랜치의 변경 사항을 하나로 합치는 명령어
+- 기능 브랜치와 원브랜치를 하나로 합칠 때
+
+1. merge 시나리오 > 충돌 발생 X + fast-forward merge
+    - 원 브랜치에서 분기된 브랜치를 합칠 때
+    - 분기된 브랜치에 변화가 발생(새로운 커밋 발생)
+    - 원 브랜치에는 변화가 없음(새로운 커밋 없음)  >> 
+
+$  git merge <합칠 브랜치명>
+
+main에 다른 브랜치를 합칠 때
+
+$ git switch main > $ git merge <합칠 브랜치명>
+
+2. merge 시나리오 > 기존파일에 추가 + fast-forward merge - 충돌발생 X
+
+
+3. merge 시나리오 > 기존파일 수정(충돌 발생 O) + 3-way merge
+comflict 발생 파일 수동 수정
+
+rebase 명령어
+- 브랜치 병합 명령어
+- 브랜치의 base를 재정의하는 명령어
+- 한 브랜치의 커밋들을 다른 브랜치의 최신 커밋 위로 옮기는 명령어
+- 개인용
+
+git log --oneline --graph --branches
+
+두 브랜치를 합치기 > merge
+
+두 브랜치를 합치기 > rebase
+- 리베이스 후 fast-forward merge가 항상 발생함.
+
+$ git switch hong
+$ git rebase main / > hong이 주체고 main을 붙이는 거임
+
+두 브랜치 합치기 > 위의 상황에 충돌 발생시키기
+
+merge 충돌
+$ git switch main
+
+$ git merge hong > 충돌 발생 > 충돌해결
+
+$ git add
+
+$ git commit > 가지 히스토리가 남음
+
+------------------------------
+rebase 충돌
+$ git switch hong
+
+$ git rebase main > 충돌발생 > 충돌해결
+
+$ git add .
+
+$ git rebase --continue
+
+$ git switch main
+
+$ git merge hong > fast-forward merge 발생
+
+$ git branch -d hong > 가지 히스토리가 안남음
+
+-------------------------------------------------------
+총정리
+1. checkout //과거 커밋 열람(읽기 전용)
+2. reset // 어떤 특정 커밋 이후의 커밋을 삭제하는 용도
+3. revert // 특정 커밋들만 삭제하는 용도
+4. branch // 브랜치
+5. merge // 병합 > 히스토리 남음
+6. rebase // 병합 > 히스토리 안남음
+
+git switch -c <브랜치명>  >> 브랜치 바꾸면서 이동하기
+
+*** 협업에서 지양하는 것들
+- reset / (revert 쓰면됨)
+- rebase / (merge 쓰면됨) / 3way shake 확인!
+- git commit --amend //협업에서 쓰면 안됨 > 커밋 ID 변경됨
+
+--------------------------------------------------------
+
+stash 명령어
+- 현재 작업 중인 변경 사항 > 임시로 저장 + 적용하는 명령어
+$ git stash save "설명"
+$ git stash list
+$ git stash apply // 최신 stash 적용
+$ git stash apply stash@{0} // 특정 stash 적용
+$ git stash drop
+$ git stash drop stash@{0}
+$ git stash pop // LIFO apply + drop
